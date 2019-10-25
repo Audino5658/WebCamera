@@ -1,5 +1,5 @@
 // Set constraints for the video stream
-var constraints = { video: { facingMode: "user" }, audio: false };
+var constraints = { video: { facingMode: "environment" }, audio: false };
 // Define constants
 const cameraView = document.querySelector("#camera--view"),
     cameraOutput = document.querySelector("#camera--output"),
@@ -7,8 +7,7 @@ const cameraView = document.querySelector("#camera--view"),
     cameraTrigger = document.querySelector("#camera--trigger")
     cameraFrame = document.querySelector("#camera--frame")
 
-const FRAME = "happy.png";
-drawFrame(FRAME);
+
 
 // Access the device camera and stream to cameraView
 function cameraStart() {
@@ -23,13 +22,12 @@ function cameraStart() {
     });
 }
 
-function drawFrame(path){
-    const image = new Image();
-    image.src = path;
+function drawFrame(){
     image.onload = () => {
       const ctx = cameraFrame.getContext("2d");
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      ctx.drawImage(image, 0, 0, window.innerWidth, window.innerHeight);
+      //ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      ctx.clearRect(0, 0);
+      ctx.drawImage(image, 0, 0);
     };
 }
 
@@ -43,3 +41,5 @@ cameraTrigger.onclick = function() {
 };
 // Start the video stream when the window loads
 window.addEventListener("load", cameraStart, false);
+
+drawFrame();
