@@ -5,6 +5,11 @@ const cameraView = document.querySelector("#camera--view"),
     cameraOutput = document.querySelector("#camera--output"),
     cameraSensor = document.querySelector("#camera--sensor"),
     cameraTrigger = document.querySelector("#camera--trigger")
+    cameraFrame = document.querySelector("#camera--frame")
+
+const FRAME = "happy.png";
+drawFrame(FRAME);
+
 // Access the device camera and stream to cameraView
 function cameraStart() {
     navigator.mediaDevices
@@ -17,6 +22,17 @@ function cameraStart() {
         console.error("Oops. Something is broken.", error);
     });
 }
+
+function drawFrame(path){
+    const image = new Image();
+    image.src = path;
+    image.onload = () => {
+      const ctx = cameraFrame.getContext("2d");
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      ctx.drawImage(image, 0, 0, window.innerWidth, window.innerHeight);
+    };
+}
+
 // Take a picture when cameraTrigger is tapped
 cameraTrigger.onclick = function() {
     cameraSensor.width = cameraView.videoWidth;
